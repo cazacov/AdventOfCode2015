@@ -13,6 +13,7 @@ namespace AdventOfCode2015.Day01
         public static void Puzzle1(string instructions)
         {
             var floor = 0;
+            var steps = 0;
             foreach (var ch in instructions)
             {
                 if (ch == '(')
@@ -23,6 +24,12 @@ namespace AdventOfCode2015.Day01
                 if (ch == ')')
                 {
                     floor--;
+                }
+
+                steps++;
+                if (floor == -1)
+                {
+                    Console.WriteLine($"Santa enters basement at step {steps}");
                 }
             }
             Console.WriteLine($"Santa is at floor #{floor}");
