@@ -11,21 +11,35 @@ namespace Day03
         {
             var directions = System.IO.File.ReadAllText("radio.txt");
             
-            var position = new Position(0, 0);
-            visitedHouses.Add(position);
+            var santaPostion = new Position(0, 0);
+            var roboSantaPosition = new Position(0, 0);
+            visitedHouses.Add(santaPostion);
 
+
+            bool santasTurn = true;
             foreach (var direction in directions)
             {
-
-                position = position.Go(direction);
-                visitedHouses.Add(position);
+                if (santasTurn)
+                {
+                    santaPostion = santaPostion.Go(direction);
+                    visitedHouses.Add(santaPostion);
+                }
+                else
+                {
+                    roboSantaPosition = roboSantaPosition.Go(direction);
+                    visitedHouses.Add(roboSantaPosition);
+                }
+                santasTurn = !santasTurn;
             }
-            Console.WriteLine($"Santa delivered presents to {visitedHouses.Count} houses");
+            Console.WriteLine($"Santa and his robot delivered presents to {visitedHouses.Count} houses");
         }
     }
 
     class Position
     {
+        public readonly int X;
+        public readonly int Y;
+
         public Position(int x, int y)
         {
             X = x;
@@ -66,8 +80,6 @@ namespace Day03
             throw new ArgumentOutOfRangeException(nameof(direction));
         }
 
-        public readonly int X;
-        public readonly int Y;
         public override int GetHashCode()
         {
             return HashCode.Combine(X, Y);
