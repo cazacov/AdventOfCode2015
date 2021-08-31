@@ -8,8 +8,46 @@ namespace Day05
         static void Main(string[] args)
         {
             var lines = System.IO.File.ReadAllLines("input.txt");
-            var niceLines = lines.ToList().Count(IsNiceLine);
-            Console.WriteLine($"There are {niceLines} nice strings");
+            var niceStrings = lines.ToList().Count(IsNiceLine);
+            Console.WriteLine($"There are {niceStrings} nice strings");
+            var veryNiceStrings = lines.ToList().Count(IsVeryNice);
+            Console.WriteLine($"There are {veryNiceStrings} very nice strings");
+        }
+
+        private static bool IsVeryNice(string arg)
+        {
+            bool pairFound = false;
+            for (int i = 0; i < arg.Length - 3; i++)
+            {
+                var str = arg.Substring(i, 2);
+                var idx = arg.LastIndexOf(str);
+                if (idx > i+1)
+                {
+                    pairFound = true;
+                    break;
+                }
+            }
+
+            if (!pairFound)
+            {
+                return false;
+            }
+
+            bool doublesFound = false;
+            for (int i = 0; i < arg.Length - 2; i++)
+            {
+                if (arg[i] == arg[i + 2])
+                {
+                    doublesFound = true;
+                    break;
+                }
+            }
+
+            if (!doublesFound)
+            {
+                return false;
+            }
+            return true;
         }
 
         private static bool IsNiceLine(string arg)
